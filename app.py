@@ -2,10 +2,11 @@ import streamlit as st
 import pickle
 import pandas as pd
 import matplotlib
-matplotlib.use('Agg')   # ✅ FIX FOR STREAMLIT CLOUD
+matplotlib.use('Agg')   # ✅ Fix for Streamlit Cloud
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, roc_auc_score
 import numpy as np
+import os   # ✅ Needed for file path fix
 
 # ===============================
 # PAGE CONFIG (FULL SCREEN)
@@ -13,11 +14,14 @@ import numpy as np
 st.set_page_config(layout="wide")
 
 # ===============================
-# LOAD FILES
+# LOAD FILES (FIXED PATH)
 # ===============================
 model = pickle.load(open("model_full.pkl", "rb"))
 columns = pickle.load(open("columns_full.pkl", "rb"))
-X_test, y_test, y_prob = pickle.load(open("test_data_small.pkl", "rb"))
+
+# ✅ FIXED FILE PATH FOR CLOUD
+file_path = os.path.join(os.path.dirname(__file__), "test_data_small.pkl")
+X_test, y_test, y_prob = pickle.load(open(file_path, "rb"))
 
 # ===============================
 # TITLE
