@@ -15,7 +15,9 @@ st.set_page_config(layout="wide")
 # ===============================
 model = pickle.load(open("model_full.pkl", "rb"))
 columns = pickle.load(open("columns_full.pkl", "rb"))
-X_test, y_test, y_prob = pickle.load(open("test_data.pkl", "rb"))
+
+# ✅ ONLY CHANGE IS HERE
+X_test, y_test, y_prob = pickle.load(open("test_data_small.pkl", "rb"))
 
 # ===============================
 # TITLE
@@ -68,7 +70,6 @@ st.header("📊 Data Overview")
 
 col1, col2 = st.columns(2)
 
-# ✅ FINAL FIXED METRICS
 col1.metric("Number of Features", 171)
 col2.metric("Total Dataset Size", "3,075,110 rows")
 
@@ -88,7 +89,7 @@ feat_imp = pd.DataFrame({
     "Importance": importances
 }).sort_values(by="Importance", ascending=False).head(15)
 
-fig, ax = plt.subplots(figsize=(6, 4))  # ✅ smaller graph
+fig, ax = plt.subplots(figsize=(6, 4))
 ax.barh(feat_imp["Feature"], feat_imp["Importance"])
 ax.invert_yaxis()
 
@@ -110,7 +111,7 @@ st.header("📈 Model Performance")
 fpr, tpr, _ = roc_curve(y_test, y_prob)
 roc_score = roc_auc_score(y_test, y_prob)
 
-fig2, ax2 = plt.subplots(figsize=(6, 4))  # ✅ smaller graph
+fig2, ax2 = plt.subplots(figsize=(6, 4))
 ax2.plot(fpr, tpr)
 ax2.set_xlabel("False Positive Rate")
 ax2.set_ylabel("True Positive Rate")
@@ -131,7 +132,7 @@ A ROC score closer to 1 indicates excellent predictive performance.
 # ===============================
 st.header("📉 Risk Distribution")
 
-fig3, ax3 = plt.subplots(figsize=(6, 4))  # ✅ smaller graph
+fig3, ax3 = plt.subplots(figsize=(6, 4))
 ax3.hist(y_prob, bins=50)
 ax3.set_title("Default Probability Distribution")
 
