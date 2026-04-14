@@ -1,6 +1,8 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')   # ✅ FIX FOR STREAMLIT CLOUD
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, roc_auc_score
 import numpy as np
@@ -15,8 +17,6 @@ st.set_page_config(layout="wide")
 # ===============================
 model = pickle.load(open("model_full.pkl", "rb"))
 columns = pickle.load(open("columns_full.pkl", "rb"))
-
-# ✅ ONLY CHANGE IS HERE
 X_test, y_test, y_prob = pickle.load(open("test_data_small.pkl", "rb"))
 
 # ===============================
@@ -71,9 +71,9 @@ st.header("📊 Data Overview")
 col1, col2 = st.columns(2)
 
 col1.metric("Number of Features", 171)
-col2.metric("Total Dataset Size", "3,075,110 rows")
+col2.metric("Total Dataset Size", "307,511 rows")
 
-st.caption("Dataset: Home Credit Default Risk (4M+ records, 171 features)")
+st.caption("Dataset: Home Credit Default Risk (307,511 records, 171 features)")
 
 st.dataframe(X_test.head())
 
