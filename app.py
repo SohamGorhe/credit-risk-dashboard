@@ -79,8 +79,8 @@ st.header("📊 Data Overview")
 
 col1, col2 = st.columns(2)
 
-col1.metric("Number of Features", len(columns))
-col2.metric("Sample Size Used", "1000 rows")
+col1.metric("Number of Features", 114)
+col2.metric("Sample Size Used", "3,071,150 rows")
 
 st.dataframe(X_test.head())
 
